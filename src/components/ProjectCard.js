@@ -1,9 +1,10 @@
 import React from 'react';
 import { FontAwesomeIcon } from '@fortawesome/react-fontawesome';
+import { Link } from 'gatsby';
 
 const ProjectCard = (props) => {
 
-    const { title, techStack } = props.project;
+    const { title, techStack, path } = props.project;
 
     return (
         <div>
@@ -26,7 +27,7 @@ const ProjectCard = (props) => {
                         }
                     </div>
                     <div>
-                        <button>See details</button>
+                        <Link to={ path }><button>See details</button></Link>
                     </div>
                 </div>
             </div>

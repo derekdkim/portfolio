@@ -1,5 +1,6 @@
 import React from 'react';
 import { Link } from "gatsby";
+import { Text, Heading, Box } from '@chakra-ui/react';
 
 import Layout from '../components/layout';
 
@@ -12,12 +13,11 @@ const AboutPage = () => {
         <Layout pageTitle="About Me">
             <div>
                 {/* Left Section */}
-                <div>
-                    <h1>My Story</h1>
-                    <p>{paragraph0}</p>
-                    <br></br>
-                    <p>{paragraph1}</p>
-                </div>
+                <Box>
+                    <Heading fontSize="4xl">My Story</Heading>
+                    <Text fontSize="xl">{paragraph0}</Text>
+                    <Text fontSize="xl">{paragraph1}</Text>
+                </Box>
                 {/* Right Section */}
                 <div>
                     <img src='' alt='profile-pic'></img>

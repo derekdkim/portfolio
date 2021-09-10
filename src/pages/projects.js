@@ -7,11 +7,13 @@ import ProjectCard from '../components/ProjectCard';
 const projects = [
     {
         title: "Journey Together",
-        techStack: ["react", "node-js"]
+        techStack: ["react", "node-js"],
+        path: "/journey-together"
     },
     {
         title: "JRNL Clone",
-        techStack: ["react"]
+        techStack: ["react"],
+        path: "/jrnl-clone"
     }
 ];
 

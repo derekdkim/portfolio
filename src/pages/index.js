@@ -1,5 +1,6 @@
 import React from "react"
 import { Link } from 'gatsby';
+import { Flex, Text, Heading } from '@chakra-ui/react';
 
 import Layout from "../components/layout";
 
@@ -9,14 +10,14 @@ const subheading = 'I’m a self-taught software developer based in Winnipeg, Ma
 const IndexPage = () => {
   return (
     <Layout pageTitle="Derek Kim">
-      <div>
+      <Flex justifyContent="center" alignItems="center" direction="column" mx="40">
         <h2>Hi there,</h2>
         <h1>My name is <span>Derek Kim</span></h1>
         <p>{ subheading }</p>
         <Link to='/contact'>
           <button>Let's make something cool together</button>
         </Link>
-      </div>
+      </Flex>
     </Layout>
   )
 }
