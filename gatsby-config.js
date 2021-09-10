@@ -4,6 +4,7 @@ module.exports = {
     title: "Derek Kim",
   },
   plugins: [
+    "gatsby-plugin-fontawesome-css",
     "gatsby-plugin-gatsby-cloud",
     {
       resolve: "gatsby-plugin-manifest",
@@ -12,4 +13,7 @@ module.exports = {
       },
     },
   ],
+  flags: {
+    DEV_SSR: false
+  }
 };
