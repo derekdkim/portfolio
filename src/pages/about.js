@@ -2,7 +2,7 @@ import React from 'react';
 import { Link } from "gatsby";
 import { Text, Heading, Box } from '@chakra-ui/react';
 
-import Layout from '../components/layout';
+import Layout from '../components/layout/layout';
 
 // Content Data
 const paragraph0 = 'Why is someone trained in Microbiology trying to become a Software Developer? I thought I had everything figured out when I went to grad school until I unexpectedly fell in love with the problem-solving nature and sheer versatility of programming. As a life-long nerd, the desire to be a part of creating this ever-evolving space kept growing inside me.';

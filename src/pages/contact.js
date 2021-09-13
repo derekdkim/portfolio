@@ -1,7 +1,7 @@
 import React from 'react';
 import { FontAwesomeIcon } from '@fortawesome/react-fontawesome';
 
-import Layout from '../components/layout';
+import Layout from '../components/layout/layout';
 
 const ContactPage = () => {
 
