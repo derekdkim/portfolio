@@ -4,17 +4,29 @@ import { ChakraProvider, Box } from '@chakra-ui/react';
 // Importing FontAwesome
 import { library } from '@fortawesome/fontawesome-svg-core';
 import { fab } from '@fortawesome/free-brands-svg-icons';
-import { faLightbulb, faEnvelope, faPhone, faPaperPlane } from '@fortawesome/free-solid-svg-icons';
+import { 
+    faEnvelope, 
+    faPhone, 
+    faPaperPlane, 
+    faBars, 
+    faHome, 
+    faProjectDiagram,
+    faAddressBook
+} from '@fortawesome/free-solid-svg-icons';
+import {
+    faLightbulb,
+    faGrinWink
+} from '@fortawesome/free-regular-svg-icons';
 
 import NavBar from '../nav';
 import Footer from '../footer';
 
-library.add(fab, faLightbulb, faEnvelope, faPhone, faPaperPlane);
+library.add(fab, faLightbulb, faEnvelope, faPhone, faPaperPlane, faBars, faHome, faProjectDiagram, faGrinWink, faAddressBook);
 
 const Layout = ({ pageTitle, children }) => {
     return (
         <ChakraProvider>
-            <Box m={{ base: "2", md: "16" }}>
+            <Box m={{ base: "4", md: "16" }}>
                 <title>{ pageTitle }</title>
                 <NavBar />
                 <Box m={{ base: "4", md: "20" }}>

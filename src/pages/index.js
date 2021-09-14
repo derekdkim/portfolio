@@ -1,5 +1,5 @@
 import React from "react"
-import { Link } from 'gatsby';
+import { Link as GatsbyLink } from 'gatsby';
 import { Flex, Text, Heading, Button } from '@chakra-ui/react';
 
 import Layout from "../components/layout/layout";
@@ -26,13 +26,13 @@ const IndexPage = () => {
     <Layout pageTitle="Derek Kim">
       <Flex direction="column">
         <Heading
-          fontSize={{ base: "md", lg: "4xl" }}
+          fontSize={{ base: "xl", lg: "4xl" }}
           ml={{ base: "4", lg: "8" }}
         >
           Hi there,
         </Heading>
         <Heading
-          fontSize={{ base: "xl", sm: "2xl", md: "6xl" }}
+          fontSize={{ base: "4xl", sm: "4xl", md: "6xl" }}
         >
           My name is <NameText>Derek Kim</NameText>
         </Heading>
@@ -45,10 +45,17 @@ const IndexPage = () => {
         <Flex
           justifyContent="center"
           my={{ base: "8", md: "12" }}
+          mx={{ base: "4" }}
         >
-          <Link to='/contact'>
-            <Button>Let's make something cool together</Button>
-          </Link>
+          <GatsbyLink to='/contact'>
+            <Button
+              colorScheme="purple"
+              size="lg"
+              variant="solid"
+            >
+              Let's work together!
+            </Button>
+          </GatsbyLink>
         </Flex>
       </Flex>
     </Layout>

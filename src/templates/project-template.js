@@ -1,50 +1,83 @@
 import React from "react";
 import { FontAwesomeIcon } from "@fortawesome/react-fontawesome";
 import { Link } from "gatsby";
+import {
+    Heading,
+    Flex,
+    Grid,
+    Text,
+    Icon,
+    Button,
+    List,
+    ListItem
+} from "@chakra-ui/react";
 
 import Layout from "../components/layout/layout";
 
 const ProjectTemplate = ({ pageContext: { project } }) => {
     return (
         <Layout>
-            <div>
-                <h1>{ project.title }</h1>
-                <div>
-                    <FontAwesomeIcon icon={["fab", "github"]} />
-                    <span>View Source Code:</span>
+            <Flex
+                flexDirection="column"
+            >
+                <Heading>{ project.title }</Heading>
+                <Flex
+                    flexDirection="row"
+                    my="8"
+                    fontSize={{ base: "md", md: "xl" }}
+                    alignItems="center"
+                >
+                    <Icon as={ FontAwesomeIcon } icon={["fab", "github"]} fontSize="2xl" />
+                    <Text d="inline" mx="2">View Source Code:</Text>
                     {   /* Source Code Links */
-                        project.components.map((component, index) => <Link to={ component.url } key={ index } ><button>{ component.name }</button></Link>)
+                        project.components.map((component, index) => <Link to={ component.url } key={ index } ><Button mx="2" colorScheme="yellow">{ component.name }</Button></Link>)
                     }
-                </div>
-                <div>
+                </Flex>
+                <Flex
+                    fontSize="xl"
+                    flexDirection="inherit"
+                >
                     {   /* Project Description */
-                        project.desc.map((paragraph, index) => <p key={ index }>{ paragraph }</p>)
+                        project.desc.map((paragraph, index) => <Text mb="4" key={ index }>{ paragraph }</Text>)
                     }
-                </div>
-                <div>
-                    <Link to={ project.url }><button>Try it out</button></Link>
-                </div>
-                <div>
-                    <h2>Technologies Used</h2>
-                    <div>
-                        { /* Tech stack for each component of the project */
-                            project.components.map((component, index) => 
-                                <div key={ index } >
-                                    {   /* Add section header if more than one component */
-                                        project.components.length > 1 &&
-                                        <h1>{ component.name }</h1>
+                </Flex>
+                <Flex
+                    my="8"
+                    justifyContent="center"
+                >
+                    <Link to={ project.url }><Button size="lg" colorScheme="purple">Try it out</Button></Link>
+                </Flex>
+                <Heading>Technologies Used</Heading>
+                <Grid
+                    templateColumns={ `repeat(${project.components.length}, 1fr)`}
+                    my="8"
+                >
+                    { /* Tech stack for each component of the project */
+                        project.components.map((component, index) => 
+                            <Flex 
+                                key={ index }
+                                flexDirection="column" 
+                            >
+                                {   /* Add section header if more than one component */
+                                    project.components.length > 1 &&
+                                    <Heading
+                                        fontSize={{ base: "lg", md: "xl" }}
+                                    >
+                                        { component.name }
+                                    </Heading>
+                                }
+                                <List
+                                    fontSize={{ base: "sm", md: "md" }}
+                                >
+                                    {   /* List of tech used for the component */
+                                        component.tech.map((tech, index) => <ListItem>{ tech }</ListItem>)
                                     }
-                                    <ul>
-                                        {   /* List of tech used for the component */
-                                            component.tech.map((tech, index) => <li>{ tech }</li>)
-                                        }
-                                    </ul>
-                                </div>
-                            )
-                        }
-                    </div>
-                </div>
-            </div>
+                                </List>
+                            </Flex>
+                        )
+                    }
+                </Grid>
+            </Flex>
         </Layout>
     );
 }
