@@ -17,7 +17,10 @@ import {
     faLightbulb,
     faGrinWink
 } from '@fortawesome/free-regular-svg-icons';
+// Font
+import "@fontsource/roboto";
 
+import theme from '../../themes/theme';
 import NavBar from '../nav';
 import Footer from '../footer';
 
@@ -25,7 +28,7 @@ library.add(fab, faLightbulb, faEnvelope, faPhone, faPaperPlane, faBars, faHome,
 
 const Layout = ({ pageTitle, children }) => {
     return (
-        <ChakraProvider>
+        <ChakraProvider theme={theme}>
             <Box m={{ base: "4", md: "16" }}>
                 <title>{ pageTitle }</title>
                 <NavBar />

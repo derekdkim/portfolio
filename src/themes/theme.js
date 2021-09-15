@@ -1,13 +1,14 @@
 import { extendTheme } from "@chakra-ui/react";
 
+import IconButton from "./IconButton";
+
 const theme = extendTheme({
+    fonts: {
+        body: "Roboto"
+    },
     components: {
-        Text: {
-            baseStyle: {
-                color: "#102A43",
-            },
-        }
-    }
+        IconButton,
+    },
 });
 
 export default theme;

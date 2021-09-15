@@ -9,6 +9,8 @@ import {    Flex,
             MenuButton, 
             MenuList, 
             MenuItem,
+            Link as ChakraLink,
+            useColorMode
         } from '@chakra-ui/react';
 import { FontAwesomeIcon } from '@fortawesome/react-fontawesome';
 
@@ -17,8 +19,7 @@ const NavItem = props => {
     return(
         <Text
             fontWeight="bold" 
-            fontSize="xl" 
-            ml="8"
+            fontSize="xl"
             { ...props }
         >
             { props.children }
@@ -31,6 +32,7 @@ const theme = extendTheme({
 });
 
 const NavBar = () => {
+    const { colorMode, toggleColorMode } = useColorMode();
 
     return (
         <Flex>
@@ -38,6 +40,8 @@ const NavBar = () => {
                 <IconButton
                     aria-label="Toggle Dark Mode"
                     icon={<Icon as={ FontAwesomeIcon } icon={["far", "lightbulb"]} fontSize="xl" />}
+                    variant="ghost"
+                    onClick={ toggleColorMode }
                 />
             </Flex>
             <Flex
@@ -45,10 +49,10 @@ const NavBar = () => {
                 direction="row"
                 display={{ base: "none", md: "flex" }}
             >
-                <GatsbyLink to='/'><NavItem>Home</NavItem></GatsbyLink>
-                <GatsbyLink to='/about'><NavItem>About Me</NavItem></GatsbyLink>
-                <GatsbyLink to='/projects'><NavItem>Projects</NavItem></GatsbyLink>
-                <GatsbyLink to='/contact'><NavItem>Contact</NavItem></GatsbyLink>
+                <ChakraLink as={ GatsbyLink } to="/" ml="8"><NavItem>Home</NavItem></ChakraLink>
+                <ChakraLink as={ GatsbyLink } to="/about" ml="8"><NavItem>About Me</NavItem></ChakraLink>
+                <ChakraLink as={ GatsbyLink } to="/projects" ml="8"><NavItem>Projects</NavItem></ChakraLink>
+                <ChakraLink as={ GatsbyLink } to="/contact" ml="8"><NavItem>Contact</NavItem></ChakraLink>
             </Flex>
             <Flex 
                 ml="auto"

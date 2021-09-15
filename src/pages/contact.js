@@ -10,7 +10,8 @@ import {
     FormControl,
     FormLabel,
     Input,
-    Textarea
+    Textarea,
+    Link
 } from '@chakra-ui/react';
 
 import Layout from '../components/layout/layout';
@@ -28,15 +29,22 @@ const ContactPage = () => {
                     Let's Get in Touch!
                 </Heading>
                 <Flex my="4">
-                    <IconButton
-                        aria-label="Visit Derek's Github"
-                        icon={<Icon as={ FontAwesomeIcon } icon={["fab", "github"]} fontSize="3xl" />}
-                        mr="4"
-                    />
-                    <IconButton
-                        aria-label="Visit Derek's Linkedin"
-                        icon={<Icon as={ FontAwesomeIcon } icon={["fab", "linkedin"]} fontSize="3xl" />}
-                    />
+                    
+                    <Link href="https://github.com/derekdkim">
+                        <IconButton
+                            aria-label="Visit Derek's Github"
+                            icon={<Icon as={ FontAwesomeIcon } icon={["fab", "github"]} fontSize="3xl" />}
+                            mr="4"
+                            variant="ghost"
+                        />
+                    </Link>
+                    <Link href="https://ca.linkedin.com/">
+                        <IconButton
+                            aria-label="Visit Derek's Linkedin"
+                            icon={<Icon as={ FontAwesomeIcon } icon={["fab", "linkedin"]} fontSize="3xl" />}
+                            variant="ghost"
+                        />
+                    </Link>
                 </Flex>
                 <Flex
                     flexDirection="column"
@@ -52,7 +60,7 @@ const ContactPage = () => {
                         <FontAwesomeIcon icon="envelope" /> Email: derek.kim1024@gmail.com
                     </Text>
                     <Text fontSize="lg" m="2">
-                        <FontAwesomeIcon icon="phone" /> Phone: (204) 293-7735
+                        <FontAwesomeIcon icon="phone" /> Phone: Available upon request
                     </Text>
                 </Flex>
                 <Flex

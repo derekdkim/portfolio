@@ -1,6 +1,6 @@
 import React from "react"
 import { Link as GatsbyLink } from 'gatsby';
-import { Flex, Text, Heading, Button } from '@chakra-ui/react';
+import { Flex, Text, Heading, Button, useColorMode } from '@chakra-ui/react';
 
 import Layout from "../components/layout/layout";
 
@@ -8,13 +8,14 @@ import Layout from "../components/layout/layout";
 const subheading = 'I’m a self-taught software developer based in Winnipeg, Manitoba. I have a Master’s degree in Microbiology but I am pursuing my passion for creating cool apps.';
 
 const IndexPage = () => {
+  const { colorMode, toggleColorMode } = useColorMode();
 
   const NameText = (props) => {
     // "#27FF7E" in dark mode
     return (
       <Text
         d="inline"
-        color="#2D65B9"
+        color={ colorMode === "light" ? "#2D65B9" : "#27FF7E" }
         { ...props }
       >
         { props.children }

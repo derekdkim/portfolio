@@ -42,10 +42,8 @@ const ProjectCard = (props) => {
                     d={{ base: "none", md: "flex" }}
                 >
                     <Text
-                        bg="gray.100"
                         p="2"
                         m="2"
-                        rounded="lg"
                     >
                         { desc }
                     </Text>
