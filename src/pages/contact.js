@@ -1,4 +1,4 @@
-import React from 'react';
+import React, { useEffect } from 'react';
 import { FontAwesomeIcon } from '@fortawesome/react-fontawesome';
 import { 
     Icon, 
@@ -11,12 +11,28 @@ import {
     FormLabel,
     Input,
     Textarea,
-    Link
+    Link,
+    useToast
 } from '@chakra-ui/react';
+import { useForm } from '@formspree/react';
 
 import Layout from '../components/layout/layout';
 
 const ContactPage = () => {
+    const [state, handleSubmit] = useForm("mgerdogg");
+    const toast = useToast();
+
+    useEffect(() => {
+        if (state.succeeded) {
+            toast({
+                title: "Message sent!",
+                description: "Thanks for reaching out to me.",
+                status: "success",
+                duration: 5000,
+                isClosable: true
+            });
+        }
+    }, [state.succeeded, toast]);
 
     return (
         <Layout pageTitle="Contact Me">
@@ -59,9 +75,6 @@ const ContactPage = () => {
                     <Text fontSize="lg" m="2">
                         <FontAwesomeIcon icon="envelope" /> Email: derek.kim1024@gmail.com
                     </Text>
-                    <Text fontSize="lg" m="2">
-                        <FontAwesomeIcon icon="phone" /> Phone: Available upon request
-                    </Text>
                 </Flex>
                 <Flex
                     flexDirection="column"
@@ -69,26 +82,30 @@ const ContactPage = () => {
                     <Text fontSize="lg" my="8" fontWeight="bold">
                         My inbox is always open. Leave me a message and I will get back to you as soon as I am able.
                     </Text>
-                    <form>
+                    <form onSubmit={ handleSubmit }>
                         <Flex>
                             <FormControl id="name" p="2">
                                 <FormLabel>Name</FormLabel>
-                                <Input type="text"></Input>
+                                <Input type="text" name="name"></Input>
                             </FormControl>
                             <FormControl id="email" p="2">
                                 <FormLabel>Email</FormLabel>
-                                <Input type="email"></Input>
+                                <Input type="email" name="email"></Input>
                             </FormControl>
                         </Flex>
                         <FormControl id="message" p="2">
                             <FormLabel>Message</FormLabel>
-                            <Textarea type="text"></Textarea>
+                            <Textarea type="text" name="message"></Textarea>
                         </FormControl>
                         <Flex ml="2" mt="4">
                             <Button
                                 leftIcon={<Icon as={ FontAwesomeIcon } icon="paper-plane" />}
                                 colorScheme="purple"
-                            >Send</Button>
+                                type="submit"
+                                disabled={ state.submitting }
+                            >
+                                Send
+                            </Button>
                         </Flex>
                     </form>
                 </Flex>

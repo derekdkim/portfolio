@@ -14,6 +14,7 @@ import {
 } from '@chakra-ui/react';
 
 import Layout from '../components/layout/layout';
+import ProfileImg from "../images/profile.jpg";
 
 // Content Data
 const paragraph0 = 'Why is someone trained in Microbiology trying to become a Software Developer? I thought I had everything figured out when I went to grad school until I unexpectedly fell in love with the problem-solving nature and sheer versatility of programming. As a life-long nerd, the desire to be a part of creating this ever-evolving space kept growing inside me.';
@@ -48,7 +49,7 @@ const AboutPage = () => {
                     alignItems="center"
                     p="4"
                 >
-                    <Image src='https://bit.ly/sage-adebayo' alt='profile-pic' />
+                    <Image src={ ProfileImg } alt='Derek Kim' />
                 </Flex>
                 {/* Right Section */}
                 <Box>

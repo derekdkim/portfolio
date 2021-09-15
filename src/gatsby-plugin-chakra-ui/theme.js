@@ -7,7 +7,8 @@ const theme = extendTheme({
                 color: "#102A43",
             },
         }
-    }
+    },
+    initialColorMode: "dark"
 });
 
 export default theme;

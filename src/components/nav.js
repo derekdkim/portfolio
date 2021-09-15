@@ -2,7 +2,6 @@ import React from 'react';
 import { Link as GatsbyLink } from 'gatsby';
 import {    Flex, 
             Text, 
-            extendTheme, 
             Icon, 
             IconButton, 
             Menu, 
@@ -27,12 +26,8 @@ const NavItem = props => {
     );
 }
 
-const theme = extendTheme({
-
-});
-
 const NavBar = () => {
-    const { colorMode, toggleColorMode } = useColorMode();
+    const { toggleColorMode } = useColorMode();
 
     return (
         <Flex>

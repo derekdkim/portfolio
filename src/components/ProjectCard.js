@@ -10,12 +10,12 @@ const ProjectCard = (props) => {
 
     return (
         <Flex
-            flexDirection={{ base:"column", md: index % 2 == 0 ? "row" : "row-reverse" }}
+            flexDirection={{ base:"column", md: index % 2 === 0 ? "row" : "row-reverse" }}
             m="6"
         >
             {/* Thumbnail */}
             <Flex
-                alignItem="center"
+                alignItems="center"
                 justifyContent="center"
             >
                 <Image 
@@ -29,8 +29,8 @@ const ProjectCard = (props) => {
             {/* Info */}
             <Flex
                 flexDirection="column"
-                ml={{ base: "0", md: index % 2 == 0 ? "4" : "0" }}
-                mr={{ base: "0", md: index % 2 == 0 ? "0" : "4" }}
+                ml={{ base: "0", md: index % 2 === 0 ? "4" : "0" }}
+                mr={{ base: "0", md: index % 2 === 0 ? "0" : "4" }}
                 justifyContent={{ base: "center", md: "initial" }}
             >
                 <Heading

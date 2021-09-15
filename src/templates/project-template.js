@@ -1,6 +1,6 @@
 import React from "react";
 import { FontAwesomeIcon } from "@fortawesome/react-fontawesome";
-import { Link } from "gatsby";
+import { Link } from "@chakra-ui/react";
 import {
     Heading,
     Flex,
@@ -30,7 +30,7 @@ const ProjectTemplate = ({ pageContext: { project } }) => {
                     <Icon as={ FontAwesomeIcon } icon={["fab", "github"]} fontSize="2xl" />
                     <Text d="inline" mx="2">View Source Code:</Text>
                     {   /* Source Code Links */
-                        project.components.map((component, index) => <Link to={ component.url } key={ index } ><Button mx="2" colorScheme="yellow">{ component.name }</Button></Link>)
+                        project.components.map((component, index) => <Link href={ component.url } key={ index } ><Button mx="2" colorScheme="yellow">{ component.name }</Button></Link>)
                     }
                 </Flex>
                 <Flex
@@ -45,7 +45,7 @@ const ProjectTemplate = ({ pageContext: { project } }) => {
                     my="8"
                     justifyContent="center"
                 >
-                    <Link to={ project.url }><Button size="lg" colorScheme="purple">Try it out</Button></Link>
+                    <Link href={ project.url }><Button size="lg" colorScheme="purple">Try it out</Button></Link>
                 </Flex>
                 <Heading>Technologies Used</Heading>
                 <Grid
