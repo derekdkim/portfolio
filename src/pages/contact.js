@@ -55,7 +55,7 @@ const ContactPage = () => {
                             variant="ghost"
                         />
                     </Link>
-                    <Link href="https://ca.linkedin.com/">
+                    <Link href="https://www.linkedin.com/in/derek-kim-502650220/">
                         <IconButton
                             aria-label="Visit Derek's Linkedin"
                             icon={<Icon as={ FontAwesomeIcon } icon={["fab", "linkedin"]} fontSize="3xl" />}

@@ -30,6 +30,7 @@ const ProjectCard = (props) => {
                 flexDirection="column"
                 ml={{ base: "0", md: "6" }}
                 justifyContent={{ base: "center", md: "initial" }}
+                alignItems={{ base: "center", md: "initial" }}
             >
                 <Heading
                     fontSize={{ base: "xl", md: "3xl" }}
