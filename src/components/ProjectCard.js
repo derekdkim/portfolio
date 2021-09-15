@@ -4,13 +4,11 @@ import { Flex, Button, Heading, Text, Image, Icon } from '@chakra-ui/react';
 import { Link } from 'gatsby';
 
 const ProjectCard = (props) => {
-
-    const { index } = props;
-    const { title, techStack, path, desc } = props.project;
+    const { title, techStack, path, desc, thumbnail } = props.project;
 
     return (
         <Flex
-            flexDirection={{ base:"column", md: index % 2 === 0 ? "row" : "row-reverse" }}
+            flexDirection={{ base:"column", md: "Row" }}
             m="6"
         >
             {/* Thumbnail */}
@@ -19,18 +17,18 @@ const ProjectCard = (props) => {
                 justifyContent="center"
             >
                 <Image 
-                    src='' 
+                    src={ thumbnail } 
                     fallbackSrc="https://via.placeholder.com/150"
                     alt='project-thumbnail'
                     boxSize="150px"
                     minW="150px"
+                    fit="contain"
                 ></Image>
             </Flex>
             {/* Info */}
             <Flex
                 flexDirection="column"
-                ml={{ base: "0", md: index % 2 === 0 ? "4" : "0" }}
-                mr={{ base: "0", md: index % 2 === 0 ? "0" : "4" }}
+                ml={{ base: "0", md: "6" }}
                 justifyContent={{ base: "center", md: "initial" }}
             >
                 <Heading

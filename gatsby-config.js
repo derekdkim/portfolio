@@ -7,12 +7,6 @@ module.exports = {
     "gatsby-plugin-fontawesome-css",
     "gatsby-plugin-gatsby-cloud",
     {
-      resolve: "gatsby-plugin-manifest",
-      options: {
-        icon: "src/images/icon.png",
-      },
-    },
-    {
       resolve: "@chakra-ui/gatsby-plugin",
       options: {
         /**

@@ -17,7 +17,7 @@ import Layout from '../components/layout/layout';
 import ProfileImg from "../images/profile.jpg";
 
 // Content Data
-const paragraph0 = 'Why is someone trained in Microbiology trying to become a Software Developer? I thought I had everything figured out when I went to grad school until I unexpectedly fell in love with the problem-solving nature and sheer versatility of programming. As a life-long nerd, the desire to be a part of creating this ever-evolving space kept growing inside me.';
+const paragraph0 = 'What brings someone trained in Microbiology to the world of software development? To be frank, I thought I had everything figured out when I enrolled in grad school. One day, I started reading my brother’s intro Java textbook out of curiosity and I was introduced to a new world. I fell in love with the problem-solving nature and sheer versatility of programming. As a life-long nerd, the desire to build technologies that play an increasingly larger part of our lives kept growing inside me.';
 const paragraph1 = 'Thanks to the breathtaking amount of resources available online and helpful communities, I was able to learn from zero and dip my feet in open-source development, which cemented my passion for this craft. I still have a lot to learn as a self-taught developer but every new piece of technology I learn is an adventure I am excited to take part in. I’d love to be able to put my passion towards making something useful for you.';
 
 const AboutPage = () => {
@@ -36,7 +36,7 @@ const AboutPage = () => {
     }
     return (
         <Layout pageTitle="About Me">
-            <Heading fontSize="4xl">My Story</Heading>
+            <Heading fontSize="4xl" mb="8">My Story</Heading>
             <Box
                 display={{ base: "flex", md: "grid" }}
                 as={ isLargerThan1024 ? Grid : Flex }
@@ -49,7 +49,12 @@ const AboutPage = () => {
                     alignItems="center"
                     p="4"
                 >
-                    <Image src={ ProfileImg } alt='Derek Kim' />
+                    <Image 
+                        src={ ProfileImg } 
+                        alt="Derek Kim" 
+                        minW="220px"
+                        maxW="350px"
+                    />
                 </Flex>
                 {/* Right Section */}
                 <Box>

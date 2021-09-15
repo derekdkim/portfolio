@@ -1,5 +1,8 @@
 import * as React from "react"
 import { Link } from "gatsby"
+import { Button, Heading } from "@chakra-ui/react";
+
+import Layout from "../components/layout/layout"
 
 // styles
 const pageStyles = {
@@ -27,9 +30,8 @@ const codeStyles = {
 // markup
 const NotFoundPage = () => {
   return (
-    <main style={pageStyles}>
-      <title>Not found</title>
-      <h1 style={headingStyles}>Page not found</h1>
+    <Layout pageTitle="404 Not Found">
+      <Heading style={headingStyles}>Page not found</Heading>
       <p style={paragraphStyles}>
         Sorry{" "}
         <span role="img" aria-label="Pensive emoji">
@@ -45,9 +47,9 @@ const NotFoundPage = () => {
           </>
         ) : null}
         <br />
-        <Link to="/">Go home</Link>.
+        <Link to="/"><Button colorScheme="green">Go home</Button></Link>.
       </p>
-    </main>
+    </Layout>
   )
 }
 

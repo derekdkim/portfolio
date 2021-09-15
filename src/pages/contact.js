@@ -41,6 +41,7 @@ const ContactPage = () => {
             >
                 <Heading
                     fontSize="4xl"
+                    mb="8"
                 >
                     Let's Get in Touch!
                 </Heading>
@@ -68,7 +69,7 @@ const ContactPage = () => {
                 >
                     <Heading
                         fontSize="3xl"
-                        mb="2"
+                        my="8"
                     >
                         My Contact Info
                     </Heading>

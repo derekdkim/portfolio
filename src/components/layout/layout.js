@@ -32,7 +32,7 @@ const Layout = ({ pageTitle, children }) => {
             <Box m={{ base: "4", md: "16" }}>
                 <title>{ pageTitle }</title>
                 <NavBar />
-                <Box m={{ base: "4", md: "20" }}>
+                <Box m={{ base: "4", md: "20", lg: "7rem" }}>
                     { children }
                 </Box>
                 <Footer/>
