@@ -79,6 +79,7 @@ const ContactPage = () => {
                 </Flex>
                 <Flex
                     flexDirection="column"
+                    mb="8"
                 >
                     <Text fontSize="lg" my="8" fontWeight="bold">
                         My inbox is always open. Leave me a message and I will get back to you as soon as I am able.
