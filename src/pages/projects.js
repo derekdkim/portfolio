@@ -21,7 +21,7 @@ const projects = [
         techStack: ["react"],
         path: "/jrnl-clone",
         thumbnail: JRNLImage,
-        desc: "A full-stack clone of the online journaling app JRNL. Backend features (authentication, database, etc.) as well as hosting are done on Google Firebase."
+        desc: "A full-stack clone of the online journaling app JRNL. Backend features (authentication, database, etc.) as well as hosting are built with Google Firebase."
     }
 ];
 
