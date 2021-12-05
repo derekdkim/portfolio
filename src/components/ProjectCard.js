@@ -61,7 +61,7 @@ const ProjectCard = (props) => {
             justify={{ base: "center", md: "flex-start" }}
           >
             <Link to={path}>
-              <Button colorScheme="yellow">See details</Button>
+              <Button colorScheme="purple">See details</Button>
             </Link>
           </Flex>
         </Flex>

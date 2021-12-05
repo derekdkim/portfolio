@@ -1,51 +1,28 @@
-import * as React from "react"
-import { Link } from "gatsby"
-import { Button, Heading } from "@chakra-ui/react";
+import React from "react";
+import { Link } from "gatsby";
+import { Button, Heading, Flex, Text, Image } from "@chakra-ui/react";
 
-import Layout from "../components/layout/layout"
+import PugImg from "../images/pug-nobles.jpg";
 
-// styles
-const headingStyles = {
-  marginTop: 0,
-  marginBottom: 64,
-  maxWidth: 320,
-}
+import Layout from "../components/layout/layout";
 
-const paragraphStyles = {
-  marginBottom: 48,
-}
-const codeStyles = {
-  color: "#8A6534",
-  padding: 4,
-  backgroundColor: "#FFF4DB",
-  fontSize: "1.25rem",
-  borderRadius: 4,
-}
-
-// markup
 const NotFoundPage = () => {
   return (
     <Layout pageTitle="404 Not Found">
-      <Heading style={headingStyles}>Page not found</Heading>
-      <p style={paragraphStyles}>
-        Sorry{" "}
-        <span role="img" aria-label="Pensive emoji">
-          😔
-        </span>{" "}
-        we couldn’t find what you were looking for.
-        <br />
-        {process.env.NODE_ENV === "development" ? (
-          <>
-            <br />
-            Try creating a page in <code style={codeStyles}>src/pages/</code>.
-            <br />
-          </>
-        ) : null}
-        <br />
-        <Link to="/"><Button colorScheme="green">Go home</Button></Link>.
-      </p>
+      <Flex direction="column" justify="center" align="center" mb="20">
+        <Heading fontSize="4xl">
+          You came to the wrong neighbourhood!
+        </Heading>
+        <Image src={PugImg} alt="Pug Nobles" my="8" w={{ md: "40rem" }} />
+        <Text>This page doesn't exist.</Text>
+      </Flex>
+      <Flex justify="center">
+        <Link to="/">
+          <Button colorScheme="purple">Return to Home Page</Button>
+        </Link>
+      </Flex>
     </Layout>
-  )
-}
+  );
+};
 
-export default NotFoundPage
+export default NotFoundPage;
