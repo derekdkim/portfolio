@@ -45,7 +45,7 @@ const NavBar = () => {
                 display={{ base: "none", md: "flex" }}
             >
                 <ChakraLink as={ GatsbyLink } to="/" ml="8"><NavItem>Home</NavItem></ChakraLink>
-                <ChakraLink as={ GatsbyLink } to="/" ml="8"><NavItem>Blog</NavItem></ChakraLink>
+                <ChakraLink as={ GatsbyLink } to="/blog" ml="8"><NavItem>Blog</NavItem></ChakraLink>
                 <ChakraLink as={ GatsbyLink } to="/about" ml="8"><NavItem>About Me</NavItem></ChakraLink>
                 <ChakraLink as={ GatsbyLink } to="/projects" ml="8"><NavItem>Projects</NavItem></ChakraLink>
                 <ChakraLink as={ GatsbyLink } to="/contact" ml="8"><NavItem>Contact</NavItem></ChakraLink>
@@ -71,7 +71,7 @@ const NavBar = () => {
                         <MenuItem
                             icon={<Icon as={ FontAwesomeIcon } icon={["far", "keyboard"]} />}
                             as={ GatsbyLink }
-                            to="/"
+                            to="/blog"
                         >
                             <Text>Blog</Text>
                         </MenuItem>
