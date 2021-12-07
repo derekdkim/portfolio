@@ -35,7 +35,12 @@ module.exports = {
         name: "blog"
       }
     },
-    "gatsby-transformer-remark",
+    {
+      resolve: "gatsby-plugin-mdx",
+      options: {
+        extensions: [`.md`, `.mdx`],
+      },
+    },
   ],
   flags: {
     DEV_SSR: false

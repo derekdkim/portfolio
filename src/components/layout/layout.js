@@ -12,6 +12,7 @@ import {
   faHome,
   faProjectDiagram,
   faAddressBook,
+  faArrowLeft,
 } from "@fortawesome/free-solid-svg-icons";
 import {
   faLightbulb,
@@ -36,7 +37,8 @@ library.add(
   faProjectDiagram,
   faGrinWink,
   faAddressBook,
-  faKeyboard
+  faKeyboard,
+  faArrowLeft
 );
 
 const Layout = ({ pageTitle, children }) => {

@@ -24,7 +24,7 @@ export default Blog;
 
 export const pageQuery = graphql`
   query MyQuery {
-    blog: allMarkdownRemark {
+    blog: allMdx {
       posts: nodes {
         fields {
             slug

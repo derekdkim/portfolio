@@ -1,23 +1,23 @@
 const { projectData } = require('./content/projects');
 const { createFilePath } = require('gatsby-source-filesystem');
 
-// exports.createPages = ({ actions }) => {
-//   const { createPage } = actions;
-//   console.log(projectData);
+exports.createPages = ({ actions }) => {
+  const { createPage } = actions;
+  console.log(projectData);
 
-//   projectData.forEach(project => {
-//     createPage({
-//       path: `/${project.path}`,
-//       component: require.resolve(`./src/templates/project-template.js`),
-//       context: { project },
-//     })
-//   })
-// };
+  projectData.forEach(project => {
+    createPage({
+      path: `/${project.path}`,
+      component: require.resolve(`./src/templates/project-template.js`),
+      context: { project },
+    })
+  })
+};
 
 exports.onCreateNode = ({ node, getNode, actions }) => {
   const { createNodeField } = actions;
 
-  if (node.internal.type === 'MarkdownRemark') {
+  if (node.internal.type === 'Mdx') {
     const slug = createFilePath({ node, getNode, basePath: `pages` });
 
     createNodeField({
@@ -32,7 +32,7 @@ exports.createPages = async ({ graphql, actions }) => {
   const { createPage } = actions;
   const result = await graphql(`
     query {
-      allMarkdownRemark {
+      allMdx {
         edges {
           node {
             fields {
@@ -44,7 +44,7 @@ exports.createPages = async ({ graphql, actions }) => {
     }
   `);
 
-  result.data.allMarkdownRemark.edges.forEach(({ node }) => {
+  result.data.allMdx.edges.forEach(({ node }) => {
     createPage({
       path: node.fields.slug,
       component: require.resolve(`./src/templates/blog-post.js`),
