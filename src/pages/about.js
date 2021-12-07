@@ -22,7 +22,7 @@ const paragraph0 =
 const paragraph1 =
   "Thanks to the breathtaking amount of resources available online and helpful communities, I was able to learn from zero and dip my feet in open-source development, which cemented my passion for this craft. I still have a lot to learn as a self-taught developer but every new piece of technology I learn is an adventure I am excited to take part in. I’d love to be able to put my passion towards tackling real-world challenges.";
 
-const AboutPage = () => {
+const AboutPage = ({ data }) => {
   const [isLargerThan1024] = useMediaQuery("(min-width: 1024px)");
 
   const SkillContainer = (props) => {
@@ -46,6 +46,7 @@ const AboutPage = () => {
         {/* Left Section */}
         <Flex justifyContent="center" alignItems="center" p="4">
           <Image src={ProfileImg} alt="Derek Kim" minW="220px" maxW="350px" />
+          {/* <Image src={data.image.ProfileImgURL} alt="Derek Kim" minW="220px" maxW="350px" /> */}
         </Flex>
         {/* Right Section */}
         <Box>

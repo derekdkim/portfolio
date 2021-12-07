@@ -21,6 +21,21 @@ module.exports = {
         isUsingColorMode: true,
       },
     },
+    {
+      resolve: "gatsby-source-filesystem",
+      options: {
+        path: `${__dirname}/src/images/`,
+        name: "images"
+      }
+    },
+    {
+      resolve: "gatsby-source-filesystem",
+      options: {
+        path: `${__dirname}/content/blog/`,
+        name: "blog"
+      }
+    },
+    "gatsby-transformer-remark",
   ],
   flags: {
     DEV_SSR: false
