@@ -24,7 +24,8 @@ const componentLegend = {
   p: (props) => <Text my="1rem" {...props} />,
   pre: ({ children }) => (
     <CodeBlock
-      language={children.props.className.split("-")[1]}
+      // Default to JS in case I forget to list the language
+      language={children.props.className.split("-")[1] || 'javascript'}
       text={children.props.children}
     />
   ),
