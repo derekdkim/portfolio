@@ -1,0 +1,525 @@
+---
+title: Creating my own static blog with Gatsby.js, Chakra UI, and MDX
+author: Derek Kim
+date: 2021-12-12
+---
+Ever since I started my position at Roofbundle, I haven't gotten a chance to sink my teeth into a personal project yet. It's been 4 months since I've been brought on and I'm now starting to get that itch again. Being a self-taught developer, there's always the voice in the back of my head reminding me that I need to take extra caution not to fall behind lest I would never be able to make it in this field.
+
+I thought the best way to structure my thoughts and intentions as I waddle my way through another app is to write dev logs, and the best way to store those is in a blog on my personal website. There are so many benefits to writing a blog. I want to reinforce my learning by writing about it and hey, maybe someday it'll help someone solve a problem they've been struggling at.
+
+## Challenges
+
+The primary challenges and the focal points of putting together this static blog are as follows:
+
+- Parsing and styling markdown as `chakra-ui` components.
+- Parsing metadata from local markdown files.
+
+## Parsing Markdown files in Gatsby using GraphQL
+
+As in other frameworks, one of the most common ways of parsing Markdown files in Gatsby is through a markdown processor called [remark](https://remark.js.org/). There's a Gatsby plugin called `gatsby-transformer-remark` that makes it work with another Gatsby plugin, `gatsby-source-filesystem`, which is used to import data from local files. 
+
+However, instead of using these, I used MDX instead to give me more flexibility in the future as MDX supports JSX along with MD. So I used a plugin called `gatsby-plugin-mdx`, which works almost the exact same way as `gatsby-transformer-remark` and is also backwards compatible with remark plugins.
+
+### Setting Up
+
+The following is a step-by-step process to get MDX working with Gatsby and Chakra UI, assuming you already have a Gatsby and Chakra UI project set up. If not, the official documentation on Gatsby offers a detailed walkthrough.
+
+1) First, install the mdx plugin. The plugin itself only helps MDX become compatible with Gatsby so the MDX library also needs to be installedr. `@mdx-js/react` is necessary to import a component called `<MDXProvider />` that will allow us to style each Markdown element as a React component.
+
+```bash
+npm i gatsby-plugin-mdx @mdx-js/mdx @mdx-js/react
+```
+
+2) Set up `gatsby-config.js` to use these plugins. `gatsby-plugin-mdx` is dependent on `gatsby-source-filesystem` to function. It appears the order does matter in the config file since listing the latter first caused graphql to not work properly.
+
+```json
+// gatsby-config.js
+plugins: [
+	 {
+		 resolve: "gatsby-source-filesystem",
+		 options: {
+		 path: `${__dirname}/content/blog/`,
+		 name: "blog"
+		 }
+	 },
+	 "gatsby-plugin-mdx",
+]
+```
+
+### GraphQL Query
+
+3) Set up a `graphql` query in a file within `pages`. GraphQL is a query language that can request information from APIs. [Gatsby has a great page where it explains their reasoning behind using GraphQL for dynamic page creation.](https://www.gatsbyjs.com/docs/why-gatsby-uses-graphql/) 
+ 
+ Gatsby allows every page to execute a GraphQL query by simply exporting a `pageQuery = graphql` expression. 
+ 
+ Note: Gatsby will warn against using exported `graphql` queries outside of `pages` and will instead suggest using static queries. Since I didn't need to query in individual components, I stuck to pages.
+
+ ```javascript
+ export const pageQuery = graphql`
+  query MyQuery {
+    blog: allMdx {
+      posts: nodes {
+        fields {
+            slug
+        }
+        frontmatter {
+          date
+          title
+          author
+        }
+        excerpt(pruneLength: 300)
+        id
+      }
+    }
+  }
+`;
+ ```
+ 
+ The query above will traverse through every folder within `/content/blog/` and parse the data in the format that the query is written in. The response object will be as follows:
+ 
+ ```javascript
+ data: {
+ 	blog: {
+		posts: [
+			// Every index.mdx will be an object within this array
+			{
+				fields: {
+					// Used for setting dynamic URLs
+					slug: string,
+				},
+				frontmatter: {
+					title: string,
+					date: string,
+					author: string,
+				},
+				// pruneLength will trim excerpt to a certain length
+				excerpt: string,
+				id: string,
+			}
+		]
+	}
+ }
+ ```
+
+### Frontmatter: Metadata of MDX
+
+One of the concerns I initially had was how I was going to parse information like dates from my `.mdx` files. As it turns out, Markdown files have a way to store metadata above the body as `frontmatter`. The syntax is quite simple, as shown below:
+
+```text
+---
+title: Hello World
+author: Derek Kim
+date: 2021-12-12
+---
+
+## Hello World
+
+This is my markdown file content.
+
+```
+
+For my blog, I decided to set the title in the metadata so I can separate it from the excerpt in the index page and perhaps consider visualizing it in a list in the future.
+
+### Dynamic Page Generation And Routing
+
+So far, we have the following:
+
+```javascript
+// /src/pages/blog.js
+import React from "react";
+import { Heading, Flex } from "@chakra-ui/react";
+import { graphql } from "gatsby";
+
+import Layout from "../components/layout/layout";
+import BlogCard from "../components/blog/BlogCard";
+
+const Blog = ({ data }) => {
+  console.log(data);
+  return (
+    <Layout pageTitle="Blogs">
+      <Heading>Blog</Heading>
+      <Flex direction="column">
+        {data.blog.posts &&
+          data.blog.posts.map((item, index) => (
+            <BlogCard data={item} key={index} />
+          ))}
+      </Flex>
+    </Layout>
+  );
+};
+
+export default Blog;
+
+export const pageQuery = graphql`
+  query MyQuery {
+    blog: allMdx {
+      posts: nodes {
+        fields {
+            slug
+        }
+        frontmatter {
+          date
+          title
+          author
+        }
+        excerpt(pruneLength: 300)
+        id
+      }
+    }
+  }
+`;
+
+
+```
+
+A bunch of `BlogCard` components get dynamically created as React maps through the `posts` field. Each blog card is fairly simple in nature, it simply displays the parsed information and creates an internal link to the slug.
+
+```javascript
+import React from "react";
+import { Box, Flex, Heading, Text } from "@chakra-ui/react";
+import { format } from "date-fns";
+import { Link } from "gatsby";
+
+const BlogCard = ({ data }) => {
+  return (
+    <Flex direction="column" my="2rem">
+      <Box>
+        <Text color="#B469FF">{format(new Date(data.frontmatter.date), 'MMMM dd, yyyy')}</Text>
+        <Heading>{data.frontmatter.title}</Heading>
+      </Box>
+      <Text my='1rem'>{data.excerpt}</Text>
+      <Link to={data.fields.slug}>
+        <Text>Read more</Text>
+      </Link>
+    </Flex>
+  );
+};
+
+export default BlogCard;
+```
+
+So now we have everything ready to go except the blog pages themselves... but wait, what's a slug and how do we make it?
+
+### Slugs: Human Readable IDs
+
+Before I started looking into generating a static blog, I never heard of the word slug in this context. It apparently just refers to human readable addresses, such as `/blog/my-best-trip-ever` instead of a randomly generated string of characters like UUIDs `/blog/2d2dij2dij2r`.
+
+In Gatsby, we have to use `gatsby-node.js` to dyanically generate slugs. Functions in this file, when exported, are called globally to add functionality to the web app. It's essentially the go-to for most dynamic generation. 
+
+Note: That's not to say that it doesn't have its limitations. Namely, only one function of each type can be exported. Also, you have to pretend you're working in Node.js without ES6 syntax.
+
+**THIS DOES NOT WORK:**
+
+```javascript
+exports.createPages = async ({ graphql, actions }) => {
+  const { createPage } = actions;
+  const result = await graphql(`
+    query {
+      allMdx {
+        edges {
+          node {
+            fields {
+              slug
+            }
+          }
+        }
+      }
+    }
+  `);
+
+  // Blog pages
+  result.data.allMdx.edges.forEach(({ node }) => {
+    createPage({
+      path: node.fields.slug,
+      component: require.resolve(`./src/templates/blog-post.js`),
+      context: {
+        slug: node.fields.slug,
+      },
+    });
+  });
+};
+
+exports.createPages = async ({ actions }) => {
+  const { createPage } = actions;
+  // Project pages
+  projectData.forEach((project) => {
+    createPage({
+      path: `/${project.path}`,
+      component: require.resolve(`./src/templates/project-template.js`),
+      context: { project },
+    });
+  });
+};
+
+```
+
+**THIS WORKS:**
+
+```javascript
+exports.createPages = async ({ graphql, actions }) => {
+  const { createPage } = actions;
+  const result = await graphql(`
+    query {
+      allMdx {
+        edges {
+          node {
+            fields {
+              slug
+            }
+          }
+        }
+      }
+    }
+  `);
+
+  // Project pages
+  projectData.forEach((project) => {
+    createPage({
+      path: `/${project.path}`,
+      component: require.resolve(`./src/templates/project-template.js`),
+      context: { project },
+    });
+  });
+
+  // Blog pages
+  result.data.allMdx.edges.forEach(({ node }) => {
+    createPage({
+      path: node.fields.slug,
+      component: require.resolve(`./src/templates/blog-post.js`),
+      context: {
+        slug: node.fields.slug,
+      },
+    });
+  });
+};
+
+```
+
+Anyways, getting back to the topic of slugs, we can use a callback-esque function called `onCreateNode` to create a new slug from the file name every time a new `node` is generated. Gatsby classifies every new component in its hierchy a `node`.
+
+```javascript
+const { createFilePath } = require("gatsby-source-filesystem");
+
+exports.onCreateNode = ({ node, getNode, actions }) => {
+  // 1. Destructure the action we want
+  const { createNodeField } = actions;
+
+  // 2. Do this for every MDX node in the file system
+  if (node.internal.type === "Mdx") {
+    const slug = createFilePath({ node, getNode, basePath: `pages` });
+
+    // 3. Create the slug using the file name
+    createNodeField({
+      node,
+      name: `slug`,
+      value: slug,
+    });
+  }
+};
+```
+
+This uses a plugin called `gatsby-source-filesystem` to create a path according to the name of the folder. This approach assumes that every folder within the `/blog/` folder will be the name of the slug and that the `.mdx` file within it is called `index.mdx`, which React will call by default when importing said folder.
+
+### Creating the Blog Posts
+
+Now it's time to create the page itself. We will use `createPages` that I spoke briefly about when talking about `gatsby-node.js` to dynamically create pages according to a template. It feels somewhat convoluted compared to how pages are dynamically rendered in vanilla React but I can understand why this approach might be cleaner when combined with GraphQL queries.
+
+**NOTE: It's important to do this as an async function as GraphQL queries are asynchronous.**
+
+```javascript
+exports.createPages = async ({ graphql, actions }) => {
+  // 1. Get the action
+  const { createPage } = actions;
+  // 2. Query for slugs in node fields
+  const result = await graphql(`
+    query {
+      allMdx {
+        edges {
+          node {
+            fields {
+              slug
+            }
+          }
+        }
+      }
+    }
+  `);
+
+  // 3. Create blog pages for each slug
+  result.data.allMdx.edges.forEach(({ node }) => {
+    createPage({
+      path: node.fields.slug,
+      component: require.resolve(`./src/templates/blog-post.js`),
+      context: {
+        slug: node.fields.slug,
+      },
+    });
+  });
+};
+```
+
+### Creating a Template
+
+Now we can finally get to creating the template. This is similar to creating views or templates in Pug/Jade for Express projects. Gatsby adheres to a rigid file structure, so templates must be stored within `/src/templates/` similar to how pages must be within `/src/pages`. We can create a template and then set it as the `component` prop in `createPage()` as shown above.
+
+Note: I'm using Chakra UI for this blog but use any styling framework you prefer.
+
+```javascript
+import React from "react";
+import { FontAwesomeIcon } from "@fortawesome/react-fontawesome";
+import {
+  Box,
+  Flex,
+  Heading,
+  Text,
+  Icon,
+  Button,
+  UnorderedList,
+  ListItem,
+  Link as ChakraLink,
+} from "@chakra-ui/react";
+import { graphql, Link } from "gatsby";
+import { MDXRenderer } from "gatsby-plugin-mdx";
+import CodeBlock from "../components/CodeBlock";
+import Layout from "../components/layout/layout";
+
+const BlogPost = ({ data }) => {
+  const post = data.mdx;
+
+  return (
+    <Layout>
+      <Flex direction="column">
+        <Flex alignItems="center" justifyItems="center" my="1rem">
+          <Link to="/blog">
+            <Button
+              aria-label="Return to the blog list"
+              leftIcon={<Icon as={FontAwesomeIcon} icon="arrow-left" />}
+              variant="ghost"
+            >
+              Return to Blog
+            </Button>
+          </Link>
+        </Flex>
+        <Flex direction="column">
+          <Heading>{post.frontmatter.title}</Heading>
+          <Text my="1rem">{post.frontmatter.date}</Text>
+          <Box my="2rem">
+            <MDXRenderer frontmatter={post.frontmatter}>
+              {post.body}
+            </MDXRenderer>
+          </Box>
+        </Flex>
+      </Flex>
+    </Layout>
+  );
+};
+
+export default BlogPost;
+```
+
+Aside from seting the skeleton for this component, we need to do another GraphQL query to parse the contents of the `.mdx` file. We will query it by the string this time.
+
+```javascript
+export const query = graphql`
+  query BlogQuery($slug: String!) {
+    mdx(fields: { slug: { eq: $slug } }) {
+      body
+      frontmatter {
+        title
+        date(fromNow: true)
+        author
+      }
+    }
+  }
+`;
+```
+
+Once the data is rendered, you will notice that there's no styling whatsoever, especially if you've been using UI libraries like Chakra UI that don't apply any styling to base HTML elements. This is where `MDXProvider` comes in.
+
+```javascript
+import { MDXProvider } from "@mdx-js/react";
+import { MDXRenderer } from "gatsby-plugin-mdx";
+
+const BlogPost = ({ data }) => {
+	const componentLegend = {
+	  h2: (props) => <Heading my="1rem" as="h2" {...props} />,
+	  h3: (props) => <Heading my="1rem" as="h3" {...props} />,
+	  p: (props) => <Text my="1rem" {...props} />,
+	  pre: ({ children }) => (
+		<CodeBlock
+		  language={children.props.className.split("-")[1]}
+		  text={children.props.children}
+		/>
+	  ),
+	  ul: (props) => <UnorderedList {...props} />,
+	  li: (props) => <ListItem {...props} />,
+	  a: (props) => <ChakraLink color='teal.500' {...props} isExternal />,
+	};
+	return (
+		<>
+			<MDXProvider components={componentLegend}>
+		  		<MDXRenderer frontmatter={post.frontmatter}>
+					{post.body}
+		  		</MDXRenderer>
+			</MDXProvider>
+		</>
+	);
+};
+
+```
+
+This component allows one to convert the resulting DOM element into whatever we want. [See the official documentation for details](https://www.gatsbyjs.com/plugins/gatsby-plugin-mdx/#mdxprovider).
+
+### Supporting Code Blocks
+
+As someone who wants to write dev logs, being able to write code blocks is fairly important. So I wanted to have a fancy code block just like every other dev blog. Chakra UI has a `<Code />` component but it just didn't cut it. It was meant for inline code and not much else.
+
+After some searching, I stumbled upon [react-code-blocks by rajinwonderland](https://github.com/rajinwonderland/react-code-blocks) which works wonderfully. The only issue I had was the fact that the background was always showing in white, which I fixed by applying custom styles, as shown below:
+
+```javascript
+import React from "react";
+import { Box } from "@chakra-ui/react";
+import { CodeBlock as ImportedCodeBlock, vs2015 } from "react-code-blocks";
+
+const styles = {
+  backgroundColor: "rgb(30, 30, 30)",
+};
+
+const CodeBlock = ({ text, language }) => {
+  return (
+    <Box fontFamily="mono">
+      <ImportedCodeBlock
+        customStyle={styles}
+        text={text}
+        language={language}
+        theme={vs2015}
+        showLineNumbers
+        wrapLines
+      />
+    </Box>
+  );
+};
+
+export default CodeBlock;
+```
+
+One thing to note is that `MDXRenderer` differentiates code blocks from inline code by wrapping it inside a `<pre>` element. Since props from `<pre>` is a child that has props for a `<code>` element,  I destructured `children` and pulled the props within it.
+
+Note: The code blocks we write with \`\`\` followed by a language name like javascript marks it as the language for the code block and saves it in the response as `className: "language-javascript"`. Since `react-code-blocks` requires language to be explicitly mentioned for it to render (and not crash the app), I pulled the language information from `className`.
+
+```javascript
+	  pre: ({ children }) => (
+		<CodeBlock
+		  language={children.props.className.split("-")[1]}
+		  text={children.props.children}
+		/>
+	  ),
+```
+
+## Wrapping Up
+
+Even though images were missing, I decided I can live with it for the time being as I'm itching to work on a different project. This was my first exposure to GraphQL so I'm a little rough around the edges, but it's a phenomenal technology that I'd like to utilize in a more data-heavy project in the future.
+
+I look forward to writing more dev logs in the future.
+
+If anyone made it to the end, thanks for reading.
